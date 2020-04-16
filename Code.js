@@ -28,18 +28,19 @@ function getInputUrl() {
 
 function getMatches(text, words) {
   var wordCounts = {};
-  var matches = {};
+  var matches = [];
   for (var i=0; i<words.length; i++) {
     wordCounts[words[i]] = (text.match(new RegExp(words[i], "g")) || []).length;
     if (wordCounts[words[i]] > 0) {
-      matches[words[i]] = wordCounts[words[i]];
+      matches.push([words[i], wordCounts[words[i]]]);
     }
   }
   return matches;
 }
 
-function writeOutput(object) {
-
+function writeOutput(rows) {
+  var outputSheet = SpreadsheetApp.getActive().getSheetByName('output');
+  outputSheet.getRange(2, 1, rows.length, rows[0].length).setValues(rows);
 }
 
 
