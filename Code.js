@@ -6,24 +6,22 @@ function main() {
   var matches = getMatches(siteContentText, inputWords);
 
   writeOutput(matches);
+
+  Logger.log('done!');
+  Logger.log(matches);
 }
 
 function getInputWords() {
   var inputSheet = SpreadsheetApp.getActive().getSheetByName('input');
   var rangeValues = [].concat.apply([], inputSheet.getRange('A2:A').getValues());
-
-  var words = rangeValues.filter(function (value) {
+  return rangeValues.filter(function (value) {
     return value.toString().toLowerCase();
   });
-
-  return words;
 }
 
 function getInputUrl() {
   var inputSheet = SpreadsheetApp.getActive().getSheetByName('input');
-  var url = inputSheet.getRange('B2').getValues()[0][0];
-
-  return url;
+  return inputSheet.getRange('B2').getValues()[0][0];
 }
 
 function getMatches(text, words) {
@@ -42,5 +40,3 @@ function writeOutput(rows) {
   var outputSheet = SpreadsheetApp.getActive().getSheetByName('output');
   outputSheet.getRange(2, 1, rows.length, rows[0].length).setValues(rows);
 }
-
-
